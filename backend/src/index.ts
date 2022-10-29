@@ -20,9 +20,9 @@ logger.info(`MONGO:: Connection started`);
 connectToMongodb()
   .then((res) => {
     app.listen(port, () => {
-      console.log(`Server listening on port ${port}`);
+      logger.info(`Server:: listening on port ${port}`);
     });
   })
   .catch((err) => {
-    console.log(`MONGO : Connection Failed`);
+    logger.error(`MONGO : Connection Failed`);
   });
