@@ -2,6 +2,7 @@ import express from "express";
 import appConfig from "./config/app.config";
 import routes from "./routes/routes";
 import connectToMongodb from "./config/connection.config";
+import logger from "./utils/logger.utils";
 
 const port = appConfig.PORT;
 const app = express();
@@ -14,7 +15,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api", routes);
-console.log(`MONGO:: Connection started`);
+logger.info(`MONGO:: Connection started`);
 
 connectToMongodb()
   .then((res) => {
