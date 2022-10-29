@@ -1,7 +1,11 @@
-import { time } from "console";
 import mongoose from "mongoose";
 
 const NurserSchema = new mongoose.Schema({
+  _userId: {
+    type: mongoose.Types.ObjectId,
+    ref: "Users",
+    require: true,
+  },
   fullName: {
     type: String,
     required: true,
@@ -11,7 +15,7 @@ const NurserSchema = new mongoose.Schema({
     required: true,
   },
   contact: {
-    type: BigInt,
+    type: Number,
     required: true,
   },
   workdingDays: {
@@ -28,5 +32,5 @@ const NurserSchema = new mongoose.Schema({
   },
 });
 
-const Nurse = mongoose.model("User", NurserSchema);
+const Nurse = mongoose.model("Nurse", NurserSchema);
 export default Nurse;
