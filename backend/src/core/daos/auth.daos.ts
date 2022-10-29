@@ -11,8 +11,8 @@ export const register = async (email: string, password: string) => {
   return response;
 };
 
-export const login = async (email: string, password: string) => {
-  const response = await User.find({ email, password });
+export const login = async (email: string) => {
+  const response = await User.find({ email });
   console.log("loginDaos", response);
   return response;
 };
