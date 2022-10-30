@@ -18,3 +18,28 @@ export const getAllNurses = async (
     next(err);
   }
 };
+export const createNurseInfo = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { fullName, email, contact, workingDays, dutyStartTime, dutyEndTime } =
+    req.body;
+  try {
+    const response = await nurseServices.createNurseInfo({
+      fullName,
+      email,
+      contact,
+      workingDays,
+      dutyStartTime,
+      dutyEndTime,
+    });
+    res.send({
+      status: 200,
+      data: response,
+    });
+  } catch (err) {
+    res.status(StatusCodes.BAD_REQUEST).send(err);
+    next(err);
+  }
+};
