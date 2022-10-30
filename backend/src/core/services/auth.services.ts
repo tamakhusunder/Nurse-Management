@@ -1,7 +1,9 @@
+import { generateToken } from "../../utils/token.utils";
 import * as authDaos from "./../daos/auth.daos";
 import BadRequestError from "../../errors/BadRequestError";
 import bcrypt from "bcrypt";
 import UnauthorizedError from "../../errors/UnauthorizedError";
+import { ACCESS, REFRESH } from "../../constants/index.constants";
 
 const getHashedPassword = async (password: string): Promise<string> => {
   const saltRounds: number = 10;
@@ -28,11 +30,16 @@ export const register = async (email: string, password: string) => {
 export const login = async (email: string, password: string) => {
   if (!(email && password))
     throw new BadRequestError("Data not formatted properly");
+
   const user = await authDaos.login(email);
   if (user.length) {
     const userPasswordDB = user[0].password;
     const validPassword = await bcrypt.compare(password, userPasswordDB);
-    if (validPassword) return user;
-    else throw new BadRequestError("Password incorrect");
+    if (validPassword) {
+      const accessToken = generateToken(ACCESS, { email });
+      const refreshToken = generateToken(REFRESH, { email });
+
+      return { user, accessToken, refreshToken };
+    } else throw new BadRequestError("Password incorrect");
   } else throw new UnauthorizedError("User not found");
 };
