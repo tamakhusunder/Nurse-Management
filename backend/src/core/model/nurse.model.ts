@@ -18,7 +18,7 @@ const NurserSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  workdingDays: {
+  workingDays: {
     type: Number,
     required: true,
   },
